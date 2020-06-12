@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GameStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GameStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -30,6 +30,7 @@
           </Key>
           <Property Name="GameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="50" />
           <Property Name="Filename" Type="nvarchar" MaxLength="505" />
           <Property Name="UploadedAt" Type="datetime" />
           <Property Name="CompanyId" Type="int" />
@@ -37,7 +38,7 @@
           <Property Name="ReleaseDate" Type="datetime" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
         </EntityType>
-        <Association Name="FK__Games__CategoryI__3B75D760">
+        <Association Name="FK__Games__CategoryI__3F466844">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
           <End Role="Games" Type="Self.Games" Multiplicity="*" />
           <ReferentialConstraint>
@@ -49,7 +50,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Games__CompanyId__3A81B327">
+        <Association Name="FK__Games__CompanyId__3E52440B">
           <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
           <End Role="Games" Type="Self.Games" Multiplicity="*" />
           <ReferentialConstraint>
@@ -65,28 +66,40 @@
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Games" EntityType="Self.Games" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Games__CategoryI__3B75D760" Association="Self.FK__Games__CategoryI__3B75D760">
+          <AssociationSet Name="FK__Games__CategoryI__3F466844" Association="Self.FK__Games__CategoryI__3F466844">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Games" EntitySet="Games" />
           </AssociationSet>
-          <AssociationSet Name="FK__Games__CompanyId__3A81B327" Association="Self.FK__Games__CompanyId__3A81B327">
+          <AssociationSet Name="FK__Games__CompanyId__3E52440B" Association="Self.FK__Games__CompanyId__3E52440B">
             <End Role="Companies" EntitySet="Companies" />
             <End Role="Games" EntitySet="Games" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GameStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GameStoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="GameStoreModel.Category" />
+          <EntitySet Name="Companies" EntityType="GameStoreModel.Company" />
+          <EntitySet Name="Games" EntityType="GameStoreModel.Game" />
+          <AssociationSet Name="FK__Games__CategoryI__3F466844" Association="GameStoreModel.FK__Games__CategoryI__3F466844">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Games__CompanyId__3E52440B" Association="GameStoreModel.FK__Games__CompanyId__3E52440B">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CategoryDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Games" Relationship="Self.FK__Games__CategoryI__3B75D760" FromRole="Categories" ToRole="Games" />
+          <NavigationProperty Name="Games" Relationship="GameStoreModel.FK__Games__CategoryI__3F466844" FromRole="Category" ToRole="Game" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -98,7 +111,7 @@
           <Property Name="CompanyDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Games" Relationship="Self.FK__Games__CompanyId__3A81B327" FromRole="Companies" ToRole="Games" />
+          <NavigationProperty Name="Games" Relationship="GameStoreModel.FK__Games__CompanyId__3E52440B" FromRole="Company" ToRole="Game" />
         </EntityType>
         <EntityType Name="Game">
           <Key>
@@ -106,52 +119,40 @@
           </Key>
           <Property Name="GameId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Filename" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
           <Property Name="UploadedAt" Type="DateTime" Precision="3" />
           <Property Name="CompanyId" Type="Int32" />
           <Property Name="CategoryId" Type="Int32" />
           <Property Name="ReleaseDate" Type="DateTime" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Category" Relationship="Self.FK__Games__CategoryI__3B75D760" FromRole="Games" ToRole="Categories" />
-          <NavigationProperty Name="Company" Relationship="Self.FK__Games__CompanyId__3A81B327" FromRole="Games" ToRole="Companies" />
+          <NavigationProperty Name="Category" Relationship="GameStoreModel.FK__Games__CategoryI__3F466844" FromRole="Game" ToRole="Category" />
+          <NavigationProperty Name="Company" Relationship="GameStoreModel.FK__Games__CompanyId__3E52440B" FromRole="Game" ToRole="Company" />
         </EntityType>
-        <Association Name="FK__Games__CategoryI__3B75D760">
-          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
-          <End Role="Games" Type="Self.Game" Multiplicity="*" />
+        <Association Name="FK__Games__CategoryI__3F466844">
+          <End Type="GameStoreModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="GameStoreModel.Game" Role="Game" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Categories">
+            <Principal Role="Category">
               <PropertyRef Name="CategoryId" />
             </Principal>
-            <Dependent Role="Games">
+            <Dependent Role="Game">
               <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Games__CompanyId__3A81B327">
-          <End Role="Companies" Type="Self.Company" Multiplicity="0..1" />
-          <End Role="Games" Type="Self.Game" Multiplicity="*" />
+        <Association Name="FK__Games__CompanyId__3E52440B">
+          <End Type="GameStoreModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="GameStoreModel.Game" Role="Game" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Companies">
+            <Principal Role="Company">
               <PropertyRef Name="CompanyId" />
             </Principal>
-            <Dependent Role="Games">
+            <Dependent Role="Game">
               <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GameStoreEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Categories" EntityType="Self.Category" />
-          <EntitySet Name="Companies" EntityType="Self.Company" />
-          <EntitySet Name="Games" EntityType="Self.Game" />
-          <AssociationSet Name="FK__Games__CategoryI__3B75D760" Association="Self.FK__Games__CategoryI__3B75D760">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Games" EntitySet="Games" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Games__CompanyId__3A81B327" Association="Self.FK__Games__CompanyId__3A81B327">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="Games" EntitySet="Games" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -161,35 +162,36 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="GameStoreModel.Category">
               <MappingFragment StoreEntitySet="Categories">
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="CategoryDescription" ColumnName="CategoryDescription" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="GameStoreModel.Company">
               <MappingFragment StoreEntitySet="Companies">
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="CEO" ColumnName="CEO" />
-                <ScalarProperty Name="CompanyDescription" ColumnName="CompanyDescription" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CompanyDescription" ColumnName="CompanyDescription" />
+                <ScalarProperty Name="CEO" ColumnName="CEO" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Games">
             <EntityTypeMapping TypeName="GameStoreModel.Game">
               <MappingFragment StoreEntitySet="Games">
-                <ScalarProperty Name="GameId" ColumnName="GameId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Filename" ColumnName="Filename" />
-                <ScalarProperty Name="UploadedAt" ColumnName="UploadedAt" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="UploadedAt" ColumnName="UploadedAt" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GameId" ColumnName="GameId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

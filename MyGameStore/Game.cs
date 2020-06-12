@@ -11,11 +11,18 @@ namespace MyGameStore
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Web;
+
     public partial class Game
     {
         public int GameId { get; set; }
         public string Name { get; set; }
+        public string Photo { get; set; }
+        [NotMapped]
+        public virtual HttpPostedFileBase PhotoFile { get; set; }
+        [NotMapped]
+        public virtual HttpPostedFileBase GameFile { get; set; }
         public string Filename { get; set; }
         public Nullable<System.DateTime> UploadedAt { get; set; }
         public Nullable<int> CompanyId { get; set; }

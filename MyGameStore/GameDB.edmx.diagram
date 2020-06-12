@@ -5,11 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6fa175068ad347d28db1695866fe90b9" Name="Diagram1">
-        <EntityTypeShape EntityType="GameStoreModel.Category" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GameStoreModel.Company" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GameStoreModel.Game" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="GameStoreModel.FK__Games__CategoryI__3B75D760" ManuallyRouted="false" />
-        <AssociationConnector Association="GameStoreModel.FK__Games__CompanyId__3A81B327" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GameStoreModel.Category" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="GameStoreModel.Company" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="GameStoreModel.Game" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="GameStoreModel.FK__Games__CategoryI__3F466844" />
+        <AssociationConnector Association="GameStoreModel.FK__Games__CompanyId__3E52440B" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

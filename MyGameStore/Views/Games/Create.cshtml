@@ -7,7 +7,7 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Games", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -24,9 +24,16 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Photo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.PhotoFile, "", new { @type = "file" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Filename, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Filename, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.GameFile, "", new { @type = "file" })
                 @Html.ValidationMessageFor(model => model.Filename, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -34,7 +41,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.UploadedAt, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UploadedAt, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.UploadedAt, new { htmlAttributes = new { @class = "form-control", type = "date" } })
                 @Html.ValidationMessageFor(model => model.UploadedAt, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -58,7 +65,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
                 @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
             </div>
         </div>

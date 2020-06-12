@@ -50,10 +50,14 @@ namespace MyGameStore.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "GameId,Name,Filename,UploadedAt,CompanyId,CategoryId,ReleaseDate,Description")] Game game)
+        public async Task<ActionResult> Create([Bind(Include = "GameId,Name,GameFile,PhotoFile,UploadedAt,CompanyId,CategoryId,ReleaseDate,Description")] Game game)
         {
             if (ModelState.IsValid)
             {
+                game.PhotoFile.SaveAs(Server.MapPath($"\\photos\\{game.PhotoFile.FileName}"));
+                game.GameFile.SaveAs(Server.MapPath($"\\files\\{game.GameFile.FileName}"));
+                game.Photo = game.PhotoFile.FileName;
+                game.Filename = game.GameFile.FileName;
                 db.Games.Add(game);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -86,10 +90,14 @@ namespace MyGameStore.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "GameId,Name,Filename,UploadedAt,CompanyId,CategoryId,ReleaseDate,Description")] Game game)
+        public async Task<ActionResult> Edit([Bind(Include = "GameId,Name,GameFile,PhotoFile,UploadedAt,CompanyId,CategoryId,ReleaseDate,Description")] Game game)
         {
             if (ModelState.IsValid)
             {
+                game.PhotoFile.SaveAs(Server.MapPath($"\\photos\\{game.PhotoFile.FileName}"));
+                game.GameFile.SaveAs(Server.MapPath($"\\files\\{game.GameFile.FileName}"));
+                game.Photo = game.PhotoFile.FileName;
+                game.Filename = game.GameFile.FileName;
                 db.Entry(game).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
