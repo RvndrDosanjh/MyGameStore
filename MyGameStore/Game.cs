@@ -25,5 +25,6 @@ namespace MyGameStore
     
         public virtual Category Category { get; set; }
         public virtual Company Company { get; set; }
+        public virtual int GameAge => (int)(DateTime.Now - (ReleaseDate ?? DateTime.Now)).TotalDays / 365;
     }
 }
